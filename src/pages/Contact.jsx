@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import emailjs from '@emailjs/browser';
 
 function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -9,11 +10,29 @@ function Contact() {
   const onSubmit = async (data) => {
     setIsSubmitting(true);
     try {
-      // Here you would typically send the form data to your backend
-      console.log('Form data:', data);
+      // Initialize EmailJS with your public key
+      emailjs.init("_oeQdZLtN4VtiE59n");
+
+      // Prepare the email template parameters
+      const templateParams = {
+        to_email: 'lubabalo@lubabalontsholo.co.za',
+        from_name: data.name,
+        from_email: data.email,
+        phone: data.phone,
+        message: data.message,
+      };
+
+      // Send the email using EmailJS
+      await emailjs.send(
+        'service_hbarqx7',
+        'template_x83071m',
+        templateParams
+      );
+
       toast.success('Message sent successfully!');
       reset();
     } catch (error) {
+      console.error('Error sending email:', error);
       toast.error('Failed to send message. Please try again.');
     } finally {
       setIsSubmitting(false);
