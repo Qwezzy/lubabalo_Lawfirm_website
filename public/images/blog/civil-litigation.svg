@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2C3E50;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3498DB;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#grad1)"/>
+  <g fill="white" opacity="0.8">
+    <!-- Scales of Justice -->
+    <path d="M400 200 L400 400 M300 300 L500 300 M300 300 L400 200 M500 300 L400 200 M350 300 L350 350 M450 300 L450 350 M350 350 L450 350" stroke="white" stroke-width="4"/>
+    <circle cx="350" cy="350" r="20" fill="none" stroke="white" stroke-width="4"/>
+    <circle cx="450" cy="350" r="20" fill="none" stroke="white" stroke-width="4"/>
+  </g>
+  <text x="400" y="500" font-family="Arial" font-size="24" fill="white" text-anchor="middle">Civil Litigation</text>
+</svg> 
