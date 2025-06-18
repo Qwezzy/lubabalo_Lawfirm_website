@@ -1,6 +1,6 @@
 # Modern Attorney Website
-
-A professional, responsive, and SEO-optimized website for law firms built with React and Tailwind CSS.
+u
+A professional, responsive, and SEO-optimized website for law firms bilt with React and Tailwind CSS.
 
 ## Features
 
