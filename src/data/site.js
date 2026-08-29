@@ -33,11 +33,12 @@ export const images = {
   hero: 'https://images.pexels.com/photos/6077326/pexels-photo-6077326.jpeg?auto=compress&cs=tinysrgb&w=2000',
   library: 'https://images.pexels.com/photos/159711/books-bookstore-book-reading-159711.jpeg?auto=compress&cs=tinysrgb&w=1600',
   gavel: 'https://images.pexels.com/photos/5669602/pexels-photo-5669602.jpeg?auto=compress&cs=tinysrgb&w=1600',
-  columns: 'https://images.pexels.com/photos/442761/pexels-photo-442761.jpeg?auto=compress&cs=tinysrgb&w=2000',
+  columns: 'https://images.pexels.com/photos/8112197/pexels-photo-8112197.jpeg?auto=compress&cs=tinysrgb&w=2000',
   capeTown: 'https://images.pexels.com/photos/259447/pexels-photo-259447.jpeg?auto=compress&cs=tinysrgb&w=2000',
   documents: 'https://images.pexels.com/photos/5668473/pexels-photo-5668473.jpeg?auto=compress&cs=tinysrgb&w=1600',
   desk: 'https://images.pexels.com/photos/7841415/pexels-photo-7841415.jpeg?auto=compress&cs=tinysrgb&w=1600',
   landscape: 'https://images.pexels.com/photos/462331/pexels-photo-462331.jpeg?auto=compress&cs=tinysrgb&w=1600',
+  criminal: 'https://images.pexels.com/photos/6077325/pexels-photo-6077325.jpeg?auto=compress&cs=tinysrgb&w=1600',
 };
 
 export const practiceAreas = [
