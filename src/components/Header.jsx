@@ -15,14 +15,14 @@ const navigation = [
 function Header() {
   const location = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
-  const onDark = location.pathname === '/' && !isScrolled;
+  const onDark = !isScrolled && location.pathname !== '/404';
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 16);
     handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [location.pathname]);
 
   return (
     <Disclosure
