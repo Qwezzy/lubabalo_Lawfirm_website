@@ -1,26 +1,26 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Disclosure } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import { site } from '../data/site';
 
 const navigation = [
   { name: 'Home', href: '/' },
   { name: 'About', href: '/about' },
   { name: 'Practice Areas', href: '/practice-areas' },
-  { name: 'Blog', href: '/blog' },
+  { name: 'Insights', href: '/blog' },
   { name: 'Contact', href: '/contact' },
 ];
 
 function Header() {
   const location = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
+  const onDark = location.pathname === '/' && !isScrolled;
 
-  // Add scroll event listener
-  useState(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0);
-    };
-    window.addEventListener('scroll', handleScroll);
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 16);
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -28,83 +28,71 @@ function Header() {
     <Disclosure
       as="nav"
       className={`fixed w-full z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white shadow-md' : 'bg-transparent'
+        isScrolled ? 'bg-parchment-50/95 backdrop-blur-md shadow-[0_1px_0_rgba(11,18,32,0.08)]' : 'bg-transparent'
       }`}
     >
       {({ open }) => (
         <>
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between h-20">
-              <div className="flex items-center">
-                <Link to="/" className="flex-shrink-0 flex items-center">
-                  <img
-                    className="h-20 w-auto"
-                    src="/logo.jpg"
-                    alt="Law Firm Logo"
-                  />
+          <div className="container">
+            <div className="flex justify-between h-[4.75rem]">
+              <Link to="/" className="flex items-center gap-3">
+                <img className="h-12 w-auto bg-white" src="/logo.jpg" alt={site.name} />
+                <span className={`hidden sm:block text-sm font-medium tracking-wide ${onDark ? 'text-white' : 'text-ink-900'}`}>
+                  {site.name}
+                </span>
+              </Link>
+
+              <div className="hidden lg:flex lg:items-center lg:gap-8">
+                {navigation.map((item) => {
+                  const active = location.pathname === item.href;
+                  return (
+                    <Link
+                      key={item.name}
+                      to={item.href}
+                      className={`text-sm tracking-wide transition-colors ${
+                        active
+                          ? onDark
+                            ? 'text-gold-400'
+                            : 'text-gold-700'
+                          : onDark
+                            ? 'text-white/75 hover:text-white'
+                            : 'text-ink-700/70 hover:text-ink-900'
+                      }`}
+                    >
+                      {item.name}
+                    </Link>
+                  );
+                })}
+                <Link to="/contact" className="btn-primary">
+                  Book a consultation
                 </Link>
               </div>
 
-              {/* Desktop navigation */}
-              <div className="hidden md:flex md:items-center md:space-x-8">
-                {navigation.map((item) => (
-                  <Link
-                    key={item.name}
-                    to={item.href}
-                    className={`${
-                      location.pathname === item.href
-                        ? 'text-primary-600'
-                        : 'text-gray-700 hover:text-primary-600'
-                    } px-3 py-2 text-sm font-medium transition-colors duration-200`}
-                  >
-                    {item.name}
-                  </Link>
-                ))}
-                <Link
-                  to="/contact"
-                  className="btn-primary"
-                >
-                  Schedule Consultation
-                </Link>
-              </div>
-
-              {/* Mobile menu button */}
-              <div className="flex items-center md:hidden">
-                <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-primary-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500">
+              <div className="flex items-center lg:hidden">
+                <Disclosure.Button className={`p-2 ${onDark ? 'text-white' : 'text-ink-800'}`}>
                   <span className="sr-only">Open main menu</span>
-                  {open ? (
-                    <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
-                  ) : (
-                    <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
-                  )}
+                  {open ? <XMarkIcon className="h-6 w-6" /> : <Bars3Icon className="h-6 w-6" />}
                 </Disclosure.Button>
               </div>
             </div>
           </div>
 
-          {/* Mobile menu */}
-          <Disclosure.Panel className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 bg-white shadow-lg">
+          <Disclosure.Panel className="lg:hidden bg-parchment-50 border-t border-ink-800/10">
+            <div className="px-5 py-4 space-y-1">
               {navigation.map((item) => (
                 <Disclosure.Button
                   key={item.name}
                   as={Link}
                   to={item.href}
-                  className={`${
-                    location.pathname === item.href
-                      ? 'bg-primary-50 text-primary-600'
-                      : 'text-gray-700 hover:bg-gray-50 hover:text-primary-600'
-                  } block px-3 py-2 rounded-md text-base font-medium`}
+                  className={`block px-3 py-2 text-base ${
+                    location.pathname === item.href ? 'text-gold-700' : 'text-ink-800'
+                  }`}
                 >
                   {item.name}
                 </Disclosure.Button>
               ))}
-              <Disclosure.Button
-                as={Link}
-                to="/contact"
-                className="block w-full text-center btn-primary mt-4"
-              >
-                Schedule Consultation
+              <Disclosure.Button as={Link} to="/contact" className="btn-primary mt-3 w-full">
+                Book a consultation
               </Disclosure.Button>
             </div>
           </Disclosure.Panel>
@@ -114,4 +102,4 @@ function Header() {
   );
 }
 
-export default Header; 
+export default Header;
