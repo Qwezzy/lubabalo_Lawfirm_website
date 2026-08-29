@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import Seo from '../components/Seo';
+import { site, images } from '../data/site';
 
 function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -9,169 +11,103 @@ function Contact() {
   const onSubmit = async (data) => {
     setIsSubmitting(true);
     try {
-      // Here you would typically send the form data to your backend
-      console.log('Form data:', data);
-      toast.success('Message sent successfully!');
+      window.location.href = `mailto:${site.email}?subject=${encodeURIComponent('Consultation request — ' + data.name)}&body=${encodeURIComponent(`${data.message}\n\n${data.name}\n${data.email}\n${data.phone || ''}`)}`;
+      toast.success('Your email client is opening so we can receive the message.');
       reset();
     } catch (error) {
-      toast.error('Failed to send message. Please try again.');
+      toast.error('Could not open mail. Please email us directly.');
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="bg-white">
-      {/* Hero Section */}
-      <div className="relative bg-gray-900">
-        <div className="absolute inset-0">
-          <img
-            className="h-full w-full object-cover opacity-50"
-            src="/images/contact-hero.jpg"
-            alt="Law firm office"
-          />
-          <div className="absolute inset-0 bg-gray-900 mix-blend-multiply" />
-        </div>
-        <div className="relative max-w-7xl mx-auto py-24 px-4 sm:py-32 sm:px-6 lg:px-8">
-          <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
-            Contact Us
-          </h1>
-          <p className="mt-6 text-xl text-gray-300 max-w-3xl">
-            Get in touch with our team of legal experts
-          </p>
-        </div>
-      </div>
+    <div>
+      <Seo
+        title="Contact"
+        description={`Consult ${site.name} in ${site.address.locality}. Call ${site.phone} or write to ${site.email}.`}
+        path="/contact"
+        image={images.desk}
+        jsonLd={{
+          '@context': 'https://schema.org',
+          '@type': 'ContactPage',
+          name: `Contact ${site.name}`,
+          url: `${site.url}/contact`,
+        }}
+      />
 
-      {/* Contact Information */}
-      <div className="py-16 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            {/* Contact Form */}
+      <section className="page-hero">
+        <img src={images.desk} alt="Consultation desk" className="absolute inset-0 h-full w-full object-cover opacity-45" />
+        <div className="absolute inset-0 bg-ink-950/65" />
+        <div className="relative container pt-32 pb-20">
+          <p className="eyebrow text-gold-400">Contact</p>
+          <h1 className="mt-4 text-5xl sm:text-6xl text-white">A first conversation, without theatre.</h1>
+          <p className="mt-5 max-w-xl text-lg text-white/75">Tell us the matter. We will tell you plainly whether we can help.</p>
+        </div>
+      </section>
+
+      <section className="py-20">
+        <div className="container grid lg:grid-cols-12 gap-12">
+          <form onSubmit={handleSubmit(onSubmit)} className="lg:col-span-7 card space-y-5">
+            <h2 className="text-3xl">Write to the firm</h2>
             <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-8">Send us a message</h2>
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    {...register('name', { required: 'Name is required' })}
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
-                  />
-                  {errors.name && (
-                    <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>
-                  )}
-                </div>
-
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    {...register('email', {
-                      required: 'Email is required',
-                      pattern: {
-                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                        message: 'Invalid email address',
-                      },
-                    })}
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
-                  />
-                  {errors.email && (
-                    <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
-                  )}
-                </div>
-
-                <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
-                    Phone
-                  </label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    {...register('phone')}
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700">
-                    Message
-                  </label>
-                  <textarea
-                    id="message"
-                    rows={4}
-                    {...register('message', { required: 'Message is required' })}
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
-                  />
-                  {errors.message && (
-                    <p className="mt-1 text-sm text-red-600">{errors.message.message}</p>
-                  )}
-                </div>
-
-                <div>
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50"
-                  >
-                    {isSubmitting ? 'Sending...' : 'Send Message'}
-                  </button>
-                </div>
-              </form>
+              <label htmlFor="name" className="text-sm font-medium">Name</label>
+              <input id="name" {...register('name', { required: 'Name is required' })} className="mt-1 block w-full rounded-lg border-ink-800/15 bg-parchment-50 px-4 py-3 focus:border-gold-500 focus:ring-gold-500" />
+              {errors.name && <p className="mt-1 text-sm text-red-700">{errors.name.message}</p>}
             </div>
-
-            {/* Contact Information */}
             <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-8">Contact Information</h2>
-              <div className="space-y-6">
-                <div>
-                  <h3 className="text-lg font-medium text-gray-900">Phone</h3>
-                  <p className="mt-2 text-gray-600">
-                    <a href="tel:+27796625043" className="hover:text-primary-600">
-                      +27 79 662 5043
-                    </a>
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="text-lg font-medium text-gray-900">Email</h3>
-                  <p className="mt-2 text-gray-600">
-                    <a href="mailto:lubabalo@lubabalontsholo.co.za" className="hover:text-primary-600">
-                      lubabalo@lubabalontsholo.co.za
-                    </a>
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="text-lg font-medium text-gray-900">Office Hours</h3>
-                  <p className="mt-2 text-gray-600">
-                    Monday - Friday: 8:00 AM - 5:00 PM<br />
-                    Saturday: By appointment<br />
-                    Sunday: Closed
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="text-lg font-medium text-gray-900">Location</h3>
-                  <p className="mt-2 text-gray-600">
-                    
-                    Hagley<br />
-                    Kuilsriver<br />
-                    7580
-                  </p>
-                </div>
-              </div>
+              <label htmlFor="email" className="text-sm font-medium">Email</label>
+              <input id="email" type="email" {...register('email', { required: 'Email is required' })} className="mt-1 block w-full rounded-lg border-ink-800/15 bg-parchment-50 px-4 py-3 focus:border-gold-500 focus:ring-gold-500" />
+              {errors.email && <p className="mt-1 text-sm text-red-700">{errors.email.message}</p>}
             </div>
-          </div>
+            <div>
+              <label htmlFor="phone" className="text-sm font-medium">Phone</label>
+              <input id="phone" type="tel" {...register('phone')} className="mt-1 block w-full rounded-lg border-ink-800/15 bg-parchment-50 px-4 py-3 focus:border-gold-500 focus:ring-gold-500" />
+            </div>
+            <div>
+              <label htmlFor="message" className="text-sm font-medium">Message</label>
+              <textarea id="message" rows={5} {...register('message', { required: 'Message is required' })} className="mt-1 block w-full rounded-lg border-ink-800/15 bg-parchment-50 px-4 py-3 focus:border-gold-500 focus:ring-gold-500" />
+              {errors.message && <p className="mt-1 text-sm text-red-700">{errors.message.message}</p>}
+            </div>
+            <button type="submit" disabled={isSubmitting} className="btn-primary">
+              {isSubmitting ? 'Opening…' : 'Send message'}
+            </button>
+          </form>
+
+          <aside className="lg:col-span-5 space-y-6">
+            <div className="card">
+              <h2 className="text-3xl">Chambers</h2>
+              <dl className="mt-6 space-y-5 text-ink-700/80">
+                <div>
+                  <dt className="text-xs uppercase tracking-[0.18em] text-gold-700">Phone</dt>
+                  <dd className="mt-1"><a href={site.phoneHref} className="hover:text-ink-900">{site.phone}</a></dd>
+                </div>
+                <div>
+                  <dt className="text-xs uppercase tracking-[0.18em] text-gold-700">Email</dt>
+                  <dd className="mt-1"><a href={`mailto:${site.email}`} className="hover:text-ink-900">{site.email}</a></dd>
+                </div>
+                <div>
+                  <dt className="text-xs uppercase tracking-[0.18em] text-gold-700">Address</dt>
+                  <dd className="mt-1">
+                    {site.address.street}<br />
+                    {site.address.locality}<br />
+                    {site.address.postalCode}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-xs uppercase tracking-[0.18em] text-gold-700">Hours</dt>
+                  <dd className="mt-1 space-y-1">
+                    {site.hours.map((h) => <div key={h}>{h}</div>)}
+                  </dd>
+                </div>
+              </dl>
+            </div>
+            <img src={images.capeTown} alt="Cape Town and Table Mountain" className="rounded-3xl h-56 w-full object-cover" />
+          </aside>
         </div>
-      </div>
+      </section>
     </div>
   );
 }
 
-export default Contact; 
+export default Contact;
