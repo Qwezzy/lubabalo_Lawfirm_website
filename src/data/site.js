@@ -30,22 +30,14 @@ export const site = {
 };
 
 export const images = {
-  hero:
-    'https://images.unsplash.com/photo-1589829545858-294d21c1f0c6?auto=format&fit=crop&w=2000&q=80',
-  library:
-    'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=1600&q=80',
-  gavel:
-    'https://images.unsplash.com/photo-1589216532372-1c2a367900d9?auto=format&fit=crop&w=1600&q=80',
-  columns:
-    'https://images.unsplash.com/photo-1479142506502-19b3a4b4bd4f?auto=format&fit=crop&w=2000&q=80',
-  capeTown:
-    'https://images.unsplash.com/photo-1580060839134-75a5dce1e3e9?auto=format&fit=crop&w=2000&q=80',
-  documents:
-    'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1600&q=80',
-  desk:
-    'https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=1600&q=80',
-  landscape:
-    'https://images.unsplash.com/photo-1418065460487-3e41a6c84dc5?auto=format&fit=crop&w=1600&q=80',
+  hero: 'https://images.pexels.com/photos/6077326/pexels-photo-6077326.jpeg?auto=compress&cs=tinysrgb&w=2000',
+  library: 'https://images.pexels.com/photos/159711/books-bookstore-book-reading-159711.jpeg?auto=compress&cs=tinysrgb&w=1600',
+  gavel: 'https://images.pexels.com/photos/5669602/pexels-photo-5669602.jpeg?auto=compress&cs=tinysrgb&w=1600',
+  columns: 'https://images.pexels.com/photos/442761/pexels-photo-442761.jpeg?auto=compress&cs=tinysrgb&w=2000',
+  capeTown: 'https://images.pexels.com/photos/259447/pexels-photo-259447.jpeg?auto=compress&cs=tinysrgb&w=2000',
+  documents: 'https://images.pexels.com/photos/5668473/pexels-photo-5668473.jpeg?auto=compress&cs=tinysrgb&w=1600',
+  desk: 'https://images.pexels.com/photos/7841415/pexels-photo-7841415.jpeg?auto=compress&cs=tinysrgb&w=1600',
+  landscape: 'https://images.pexels.com/photos/462331/pexels-photo-462331.jpeg?auto=compress&cs=tinysrgb&w=1600',
 };
 
 export const practiceAreas = [
